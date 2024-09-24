@@ -1,3 +1,117 @@
-.me-2 {
+html {
+    font-family: "Playwrite DE Grund", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: burlywood;
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+    flex: 1;
+}
+
+header img {
+    height: 300px;
+    flex: 1;
+}
+
+#buscador {
+    text-align: center;
+    background-color: coral;
+}
+
+section h2 {
+    margin: 0;
+    padding: 1rem 0;
+}
+
+.busqueda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1rem;
+}
+
+.cinta-opciones {
+    margin: 30px;
+    width: 150px;
+    border-radius: 30px;
+    padding: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+}
+
+#input-nombre {
+    margin: 30px;
+    width: 150px;
+    padding: 10px;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: black;
+}
+
+#btn-buscar {
+    margin: 30px;
     width: 100px;
+    padding: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    border-width: 2px;
+    border-style: solid;
+}
+
+#resultados h2 {
+    text-align: center;
+    background-color: deeppink;
+}
+
+button:focus, input:focus, select:focus {
+    outline: 2px solid blue;
+}
+
+.coctel {
+    text-align: center;
+    margin: 20px;
+}
+
+.coctel img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@media (max-width: 1000px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+    header h1 {
+        margin: 5%;
+    }
+    header img {
+        width: 100%;
+        height: auto;
+    }
+    #buscador {
+        align-items: flex-start;
+        font-size: 15px;
+    }
+    .busqueda {
+        flex-direction: column;
+    }
 }
