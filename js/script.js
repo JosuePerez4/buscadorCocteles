@@ -74,3 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Manejar mostrar la imagen en los detalles del coctel
+
