@@ -2,3 +2,64 @@
     font-weight: normal;
     font-size: 18px;
 }
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.custom-text {
+    font-size: 1.2rem;
+}
+
+.descripcion {
+    max-height: 300px;
+}
+
+#contenedorIngredientes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.card {
+    flex: 1 1 calc(33.33% - 15px);
+    box-sizing: border-box;
+    max-width: calc(33.33% - 15px);
+}
+
+.card-body {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    #contenedorIngredientes .card {
+        flex: 1 1 calc(50% - 15px);
+        max-width: auto;
+        max-height: auto;
+    }
+
+    .descripcion {
+        max-height: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .col-md-6:first-child {
+        order: 2;
+    }
+
+    .col-md-6:last-child {
+        order: 1;
+    }
+
+    #contenedorIngredientes .card {
+        flex: 1 1 50%;
+        max-width: 23%;
+    }
+
+    .card-body .btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

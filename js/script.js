@@ -76,4 +76,66 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Manejar mostrar la imagen en los detalles del coctel
+function mostrarDetallesCoctel(coctel) {
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${coctel}`)
+        .then(response => response.json())
+        .then(data => {
+            const imagenCoctel = document.getElementById('imagenCoctel');
+            const nombreCoctel = document.getElementById('nombreCoctel');
+            const tipoCoctel = document.getElementById('tipoCoctel');
+            const categoriaCoctel = document.getElementById('categoriaCoctel');
+            const descripcionCoctel = document.getElementById('descripcionCoctel');
 
+            // Crear las tarjetas de los ingredientes
+            const contenedorIngredientes = document.getElementById('contenedorIngredientes');
+            contenedorIngredientes.innerHTML = '';
+
+            if (data.drinks && data.drinks.length > 0) {
+                const detalles = data.drinks[0];
+                imagenCoctel.src = detalles.strDrinkThumb;
+                nombreCoctel.textContent = detalles.strDrink;
+                tipoCoctel.textContent = detalles.strAlcoholic;
+                categoriaCoctel.textContent = detalles.strCategory;
+                descripcionCoctel.textContent = detalles.strInstructions;
+
+                // Iterar sobre los ingredientes
+                for (let i = 1; i <= 15; i++) { // Los ingredientes van de strIngredient1 a strIngredient15
+                    const ingrediente = detalles[`strIngredient${i}`];
+                    if (ingrediente) {
+                        // Crear la tarjeta de ingrediente
+                        const card = document.createElement('div');
+                        card.className = 'card mt-3';
+
+                        const img = document.createElement('img');
+                        img.className = 'card-img-top img-ingrediente';
+                        img.alt = ingrediente;
+                        img.src = `https://www.thecocktaildb.com/images/ingredients/${ingrediente}-Small.png`;
+
+                        const cardbody = document.createElement('div');
+                        cardbody.className = 'card-body';
+
+                        const title = document.createElement('h5');
+                        title.className = 'card-title';
+                        title.textContent = ingrediente;
+
+                        const detallesBtn = document.createElement('a');
+                        detallesBtn.className = 'btn btn-primary';
+                        detallesBtn.href = `#`; // referencia a HTML de detalle de ingredientes
+                        detallesBtn.textContent = 'Detalles';
+
+                        // Añadir elementos a la tarjeta
+                        cardbody.appendChild(title);
+                        cardbody.appendChild(detallesBtn);
+                        card.appendChild(img);
+                        card.appendChild(cardbody);
+
+                        // Añadir tarjeta al contenedor de ingredientes
+                        contenedorIngredientes.appendChild(card);
+                    }
+                }
+            } else {
+                console.log('No se encontró información para el cóctel seleccionado.');
+            }
+        })
+        .catch(error => console.error('Error al obtener información del coctel', error));
+}
