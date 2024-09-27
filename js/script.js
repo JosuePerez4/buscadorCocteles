@@ -167,7 +167,7 @@ function mostrarDetallesCoctel(coctelId) {
                 }
             } else {
                 console.log('No se encontró información para el cóctel seleccionado.');
-            }
+            } 
         })
         .catch(function (error) {
             console.error('Error al obtener información del cóctel:', error);
@@ -196,8 +196,12 @@ document.addEventListener('DOMContentLoaded', function () {
 document.getElementById('btn-volver').addEventListener('click', function () {
     // Simplemente redirigir de vuelta a la página de búsqueda
     window.location.href = 'index.html';
+<<<<<<< HEAD
+});
+=======
 });
 
 
 
 
+>>>>>>> 679c1872fa884f89fd150f3cb25c166c49658ae7
