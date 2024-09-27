@@ -138,4 +138,41 @@ function mostrarDetallesCoctel(coctel) {
             }
         })
         .catch(error => console.error('Error al obtener información del coctel', error));
+
+       
+
+
+
+async function fetchIngredient(ingredientName) {
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${ingredientName}`;
+    
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        // Verificar que el ingrediente no esté vacío
+        if (data.ingredients && data.ingredients.length > 0) {
+            const ingredient = data.ingredients[0]; // Tomar el primer ingrediente
+            
+            // Rellenar los campos en el HTML
+            document.getElementById('ingredient-name').textContent = ingredient.strIngredient; // Nombre
+            document.getElementById('ingredient-description').textContent = ingredient.strDescription || 'Descripción no disponible'; // Descripción
+            document.getElementById('ingredient-image').src = ingredient.strImage || ''; // Imagen
+            document.getElementById('ingredient-image').alt = `Imagen de ${ingredient.strIngredient}`; // Alt de la imagen
+        } else {
+            // Si no se encuentra el ingrediente
+            document.getElementById('ingredient-name').textContent = 'Ingrediente no encontrado';
+            document.getElementById('ingredient-description').textContent = '';
+            document.getElementById('ingredient-image').src = '';
+        }
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+    }
+}
+
+// Cambia el nombre del ingrediente aquí
+const ingredientName = 'tequila'; // Cambia esto por el nombre del ingrediente que deseas buscar
+fetchIngredient(ingredientName);
+
+
 }
