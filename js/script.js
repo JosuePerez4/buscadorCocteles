@@ -167,7 +167,7 @@ function mostrarDetallesCoctel(coctelId) {
                 }
             } else {
                 console.log('No se encontró información para el cóctel seleccionado.');
-            }
+            } 
         })
         .catch(function (error) {
             console.error('Error al obtener información del cóctel:', error);
