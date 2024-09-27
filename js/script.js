@@ -1,40 +1,56 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Usamos el proxy de CORS Anywhere
     const ingredienteSelect = document.getElementById('ingrediente');
     const categoriaSelect = document.getElementById('categoria');
     const nombreInput = document.getElementById('input-nombre');
     const btnBuscar = document.getElementById('btn-buscar');
-    const resultadosDiv = document.querySelector('.resultados-busqueda');
+    const resultadosDiv = document.getElementsByClassName('resultados-busqueda')[0];
+
+    const ingredientesUrl = 'http://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
+    const categoriasUrl = 'http://www.thecocktaildb.com/api/json/v1/1/list.php?a=list';
 
     // Obtener ingredientes
-    fetch('http://www.thecocktaildb.com/api/json/v1/1/list.php?i=list')
-        .then(response => response.json())
-        .then(data => {
+    fetch(proxyUrl + ingredientesUrl)  // Aquí añadimos el proxy
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
             const ingredientes = data.drinks;
-            ingredientes.forEach(ingrediente => {
+            for (let i = 0; i < ingredientes.length; i++) {
+                const ingrediente = ingredientes[i];
                 const option = document.createElement('option');
                 option.value = ingrediente.strIngredient1;
                 option.textContent = ingrediente.strIngredient1;
                 ingredienteSelect.appendChild(option);
-            });
+            }
         })
-        .catch(error => console.error('Error al obtener los ingredientes:', error));
+        .catch(function (error) {
+            console.error('Error al obtener los ingredientes:', error);
+        });
 
     // Obtener categorías
-    fetch('http://www.thecocktaildb.com/api/json/v1/1/list.php?a=list')
-        .then(response => response.json())
-        .then(data => {
+    fetch(proxyUrl + categoriasUrl)
+        .then(function (response) {
+            if (response.ok && response.headers.get('Content-Type').includes('application/json')) {
+                return response.json();
+            } else {
+                throw new Error('La respuesta no es un JSON válido');
+            }
+        })
+        .then(function (data) {
             const categorias = data.drinks;
-            categorias.forEach(categoria => {
+            for (let i = 0; i < categorias.length; i++) {
+                const categoria = categorias[i];
                 const option = document.createElement('option');
                 option.value = categoria.strAlcoholic;
                 option.textContent = categoria.strAlcoholic;
                 categoriaSelect.appendChild(option);
-            });
+            }
         })
-        .catch(error => console.error('Error al obtener las categorías:', error));
+        .catch(function (error) {
+            console.error('Error al obtener las categorías:', error);
+        });
 
-    // Manejar la búsqueda de cocteles
-    btnBuscar.addEventListener('click', () => {
+    // Manejar la búsqueda de cócteles
+    btnBuscar.addEventListener('click', function () {
         const ingrediente = ingredienteSelect.value;
         const categoria = categoriaSelect.value;
         const nombre = nombreInput.value.trim();
@@ -49,72 +65,91 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (url) {
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    resultadosDiv.innerHTML = ''; // Limpiar resultados anteriores
+            fetch(proxyUrl + url)  // Aquí añadimos el proxy
+                .then(function (response) { return response.json(); })
+                .then(function (data) {
+                    resultadosDiv.innerHTML = '';
                     const cocteles = data.drinks;
                     if (cocteles) {
-                        cocteles.forEach(coctel => {
+                        for (let i = 0; i < cocteles.length; i++) {
+                            const coctel = cocteles[i];
                             const coctelDiv = document.createElement('div');
                             coctelDiv.classList.add('coctel');
                             coctelDiv.innerHTML = `
                                 <h3>${coctel.strDrink}</h3>
                                 <img src="${coctel.strDrinkThumb}" alt="${coctel.strDrink}">
                             `;
+
+                            // Crear el botón "Ver"
+                            const button = document.createElement('button');
+                            button.classList.add('btn-ver');
+                            button.textContent = 'Ver';
+                            button.onclick = function () {
+                                const coctelId = coctel.idDrink;
+                                localStorage.setItem('selectedCoctelId', coctelId);
+                                window.location.href = `coctailsDetail.html?id=${coctelId}`;
+                            };
+
+                            coctelDiv.appendChild(button);
                             resultadosDiv.appendChild(coctelDiv);
-                        });
+                        }
                     } else {
-                        resultadosDiv.innerHTML = '<p>No se encontraron cocteles con ese criterio.</p>';
+                        resultadosDiv.innerHTML = '<p>No se encontraron cócteles con ese criterio.</p>';
                     }
                 })
-                .catch(error => console.error('Error al obtener los cocteles:', error));
+                .catch(function (error) {
+                    console.error('Error al obtener los cócteles:', error);
+                });
         } else {
             resultadosDiv.innerHTML = '<p>Por favor, selecciona un ingrediente, una categoría o ingresa un nombre.</p>';
         }
     });
 });
 
-// Manejar mostrar la imagen en los detalles del coctel
-function mostrarDetallesCoctel(coctel) {
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${coctel}`)
-        .then(response => response.json())
-        .then(data => {
-            const imagenCoctel = document.getElementById('imagenCoctel');
-            const nombreCoctel = document.getElementById('nombreCoctel');
-            const tipoCoctel = document.getElementById('tipoCoctel');
-            const categoriaCoctel = document.getElementById('categoriaCoctel');
-            const descripcionCoctel = document.getElementById('descripcionCoctel');
+document.addEventListener('DOMContentLoaded', function () {
+    var coctelId = localStorage.getItem('selectedCoctelId');
+    if (coctelId) {
+        mostrarDetallesCoctel(coctelId);
+    } else {
+        console.error('No se ha encontrado un cóctel seleccionado.');
+    }
+});
 
-            // Crear las tarjetas de los ingredientes
-            const contenedorIngredientes = document.getElementById('contenedorIngredientes');
-            contenedorIngredientes.innerHTML = '';
-
+function mostrarDetallesCoctel(coctelId) {
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    fetch(proxyUrl + `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${coctelId}`)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
             if (data.drinks && data.drinks.length > 0) {
-                const detalles = data.drinks[0];
-                imagenCoctel.src = detalles.strDrinkThumb;
-                nombreCoctel.textContent = detalles.strDrink;
-                tipoCoctel.textContent = detalles.strAlcoholic;
-                categoriaCoctel.textContent = detalles.strCategory;
-                descripcionCoctel.textContent = detalles.strInstructions;
+                var detalles = data.drinks[0];
 
-                // Iterar sobre los ingredientes
-                for (let i = 1; i <= 15; i++) { // Los ingredientes van de strIngredient1 a strIngredient15
-                    const ingrediente = detalles[`strIngredient${i}`];
+                document.getElementById('imagenCoctel').src = detalles.strDrinkThumb;
+                document.getElementById('nombreCoctel').textContent = detalles.strDrink;
+                document.getElementById('tipoCoctel').textContent = detalles.strAlcoholic;
+                document.getElementById('categoriaCoctel').textContent = detalles.strCategory;
+                document.getElementById('descripcionCoctel').textContent = detalles.strInstructions;
+
+                var contenedorIngredientes = document.getElementById('contenedorIngredientes');
+                contenedorIngredientes.innerHTML = '';
+
+                // Mostrar los ingredientes del cóctel
+                for (var i = 1; i <= 15; i++) {
+                    var ingrediente = detalles['strIngredient' + i];
                     if (ingrediente) {
-                        // Crear la tarjeta de ingrediente
-                        const card = document.createElement('div');
+                        var card = document.createElement('div');
                         card.className = 'card mt-3';
 
-                        const img = document.createElement('img');
-                        img.className = 'card-img-top img-ingrediente';
+                        var img = document.createElement('img');
+                        img.className = 'img-ingrediente';
                         img.alt = ingrediente;
-                        img.src = `https://www.thecocktaildb.com/images/ingredients/${ingrediente}-Small.png`;
+                        img.src = 'https://www.thecocktaildb.com/images/ingredients/' + ingrediente + '-Small.png';
 
-                        const cardbody = document.createElement('div');
-                        cardbody.className = 'card-body';
+                        var cardBody = document.createElement('div');
+                        cardBody.className = 'card-body';
 
-                        const title = document.createElement('h5');
+                        var title = document.createElement('h5');
                         title.className = 'card-title';
                         title.textContent = ingrediente;
 
@@ -123,13 +158,10 @@ function mostrarDetallesCoctel(coctel) {
                         detallesBtn.href = `#`; // referencia a HTML de detalle de ingredientes
                         detallesBtn.textContent = 'Detalles';
 
-                        // Añadir elementos a la tarjeta
-                        cardbody.appendChild(title);
-                        cardbody.appendChild(detallesBtn);
+                        cardBody.appendChild(title);
+                        cardBody.appendChild(detallesBtn);
                         card.appendChild(img);
-                        card.appendChild(cardbody);
-
-                        // Añadir tarjeta al contenedor de ingredientes
+                        card.appendChild(cardBody);
                         contenedorIngredientes.appendChild(card);
                     }
                 }
@@ -137,5 +169,31 @@ function mostrarDetallesCoctel(coctel) {
                 console.log('No se encontró información para el cóctel seleccionado.');
             }
         })
-        .catch(error => console.error('Error al obtener información del coctel', error));
+        .catch(function (error) {
+            console.error('Error al obtener información del cóctel:', error);
+        });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Recuperar los valores almacenados en localStorage
+    const ingredienteSeleccionado = localStorage.getItem('ingredienteSeleccionado');
+    const categoriaSeleccionada = localStorage.getItem('categoriaSeleccionada');
+    const nombreSeleccionado = localStorage.getItem('nombreSeleccionado');
+
+    // Si existen valores almacenados, restaurarlos en los campos correspondientes
+    if (ingredienteSeleccionado) {
+        ingredienteSelect.value = ingredienteSeleccionado;
+    }
+    if (categoriaSeleccionada) {
+        categoriaSelect.value = categoriaSeleccionada;
+    }
+    if (nombreSeleccionado) {
+        nombreInput.value = nombreSeleccionado;
+    }
+});
+
+// Para devolverse y volver con todo lo seleccionado previamente
+document.getElementById('btn-volver').addEventListener('click', function () {
+    // Simplemente redirigir de vuelta a la página de búsqueda
+    window.location.href = 'index.html';
+});

@@ -1,18 +1,22 @@
-.custom-text {
-    font-weight: normal;
-    font-size: 18px;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #4A148C;
+    color: #FFFFFF;
 }
 
-body {
-    font-family: Arial, sans-serif;
+h1,
+h5 {
+    color: #EDE7F6;
 }
 
 .custom-text {
     font-size: 1.2rem;
+    color: #FFFFFF;
 }
 
 .descripcion {
     max-height: 300px;
+    color: #FFFFFF;
 }
 
 #contenedorIngredientes {
@@ -25,17 +29,56 @@ body {
     flex: 1 1 calc(33.33% - 15px);
     box-sizing: border-box;
     max-width: calc(33.33% - 15px);
+    background-color: #7E57C2;
+    border: none;
+}
+
+.card-title {
+    color: #EDE7F6;
 }
 
 .card-body {
     text-align: center;
 }
 
+.card-body .btn {
+    background-color: #9575CD;
+    color: #FFFFFF;
+    width: 100%;
+}
+
+#imagenCoctel {
+    transition: transform 0.3s ease;
+}
+
+#imagenCoctel:hover {
+    transform: scale(1.03);
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+button.btn {
+    background-color: #9575CD;
+    color: #FFFFFF;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 10px;
+}
+
+button.btn:hover {
+    background-color: #7E57C2;
+}
+
 @media (max-width: 768px) {
     #contenedorIngredientes .card {
         flex: 1 1 calc(50% - 15px);
         max-width: auto;
-        max-height: auto;
     }
 
     .descripcion {
@@ -44,7 +87,6 @@ body {
 }
 
 @media (max-width: 576px) {
-
     .col-md-6:first-child {
         order: 2;
     }

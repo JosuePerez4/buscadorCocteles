@@ -12,6 +12,7 @@
 
 <body>
     <div class="container mt-4">
+        <h1 class="d-flex justify-content-center">Detalles de cocteles</h1>
         <div class="row">
             <!-- Columna izquierda: imagen e ingredientes -->
             <div class="col-md-6 d-flex flex-column align-items-start">
@@ -19,7 +20,7 @@
                 <h5>Ingredientes</h5>
                 <div id="contenedorIngredientes" class="d-flex flex-wrap gap-2"></div>
             </div>
-            
+
             <!-- Columna derecha: detalles del cóctel -->
             <div class="col-md-6">
                 <h1 id="nombreCoctel" class="display-4"></h1>
@@ -33,6 +34,9 @@
                 </div>
                 <div id="descripcionCoctel" class="descripcion mt-3 overflow-auto"></div>
             </div>
+        </div>
+        <div class="d-flex justify-content-center mt-4 mb-4">
+            <button class="btn btn-primary btn-lg" id="btn-volver" onclick="window.location.href=''">Volver</button>
         </div>
     </div>
 
