@@ -196,4 +196,43 @@ document.addEventListener('DOMContentLoaded', function () {
 document.getElementById('btn-volver').addEventListener('click', function () {
     // Simplemente redirigir de vuelta a la página de búsqueda
     window.location.href = 'index.html';
+<<<<<<< HEAD
 });
+=======
+});
+
+// script.js
+
+function infoIngrediente(nombreIngrediente) {
+    const urlIngredientes = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?i=' + nombreIngrediente;
+    
+    fetch(urlIngredientes)
+        .then(function (response) { 
+            return response.json(); 
+        })
+        .then(function (data) {
+            
+            
+            if (data.ingredients && data.ingredients.length > 0) {
+                var informacion = data.ingredients[0];
+                document.getElementById('ingredient-name').textContent = informacion.strIngredient;
+                
+                // Corregir la URL de la imagen
+                document.getElementById('ingredient-image').src = `https://www.thecocktaildb.com/images/ingredients/${informacion.strIngredient}-Small.png`;
+                
+                // Agregar descripción
+                document.getElementById('ingredient-description').textContent = informacion.strDescription || 'Descripción no disponible';
+            } else {
+                document.getElementById('ingredient-name').textContent = 'Ingrediente no encontrado';
+                document.getElementById('ingredient-image').src = '';
+                document.getElementById('ingredient-description').textContent = '';
+            }
+        })
+        .catch(function (error) {
+            console.error('No se pudo obtener información del ingrediente', error);
+        });
+}
+
+
+
+>>>>>>> 679c1872fa884f89fd150f3cb25c166c49658ae7
