@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingredient Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .ingredient-info {
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 150px;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Ingredient Details</h1>
+        <div class="ingredient-info" id="ingredient-info">
+            <h2 id="ingredient-name"></h2>
+            <img id="ingredient-image" alt="Ingredient Image">
+            <p id="ingredient-description"></p>
+            <p><strong>Type:</strong> <span id="ingredient-type"></span></p>
+            <p><strong>Alcohol:</strong> <span id="ingredient-alcohol"></span></p>
+            <p><strong>ABV:</strong> <span id="ingredient-abv"></span></p>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+
+</body>
+</html>
