@@ -4,40 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información de Ingrediente</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4f8;
-            text-align: center;
-            padding: 20px;
-        }
-        input, button {
-            padding: 10px;
-            font-size: 1rem;
-            margin: 10px;
-        }
-        .info-ingrediente {
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 400px;
-            margin: auto;
-        }
-        .info-ingrediente img {
-            width: 150px;
-            height: auto;
-            margin-bottom: 15px;
-        }
-        .info-ingrediente h2 {
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-        .info-ingrediente p {
-            margin: 5px 0;
-        }
-    </style>
+    <!-- Vincula el archivo CSS -->
+    <link rel="stylesheet" href="../css/ingredientesStyles.css">
 </head>
 <body>
 
@@ -53,7 +21,8 @@
         <p><strong>Alcohólico:</strong> <span id="ingredient-alcoholic"></span></p>
         <p><strong>ABV:</strong> <span id="ingredient-abv"></span></p>
     </div>
-
+    <!-- Botón para volver a la página anterior -->
+    <button onclick="history.back()">Volver</button>
     <script src="../js/script.js"></script>
     
 </body>
