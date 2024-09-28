@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Usamos el proxy de CORS Anywhere
     const ingredienteSelect = document.getElementById('ingrediente');
     const categoriaSelect = document.getElementById('categoria');
     const nombreInput = document.getElementById('input-nombre');
@@ -10,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const categoriasUrl = 'http://www.thecocktaildb.com/api/json/v1/1/list.php?a=list';
 
     // Obtener ingredientes
-    fetch(proxyUrl + ingredientesUrl)  // Aquí añadimos el proxy
+    fetch(ingredientesUrl)  // Aquí añadimos el proxy
         .then(function (response) { return response.json(); })
         .then(function (data) {
             const ingredientes = data.drinks;
@@ -27,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     // Obtener categorías
-    fetch(proxyUrl + categoriasUrl)
+    fetch(categoriasUrl)
         .then(function (response) {
             if (response.ok && response.headers.get('Content-Type').includes('application/json')) {
                 return response.json();
@@ -65,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (url) {
-            fetch(proxyUrl + url)  // Aquí añadimos el proxy
+            fetch(url)  // Aquí añadimos el proxy
                 .then(function (response) { return response.json(); })
                 .then(function (data) {
                     resultadosDiv.innerHTML = '';
@@ -116,8 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function mostrarDetallesCoctel(coctelId) {
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    fetch(proxyUrl + `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${coctelId}`)
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${coctelId}`)
         .then(function (response) {
             return response.json();
         })
