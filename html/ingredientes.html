@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingredient Info</title>
+    <title>Información de Ingrediente</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,8 +16,7 @@
             font-size: 1rem;
             margin: 10px;
         }
-        .ingredient-info {
-            display: none;
+        .info-ingrediente {
             margin-top: 20px;
             border: 1px solid #ccc;
             background-color: #fff;
@@ -26,36 +25,36 @@
             max-width: 400px;
             margin: auto;
         }
-        .ingredient-info img {
+        .info-ingrediente img {
             width: 150px;
             height: auto;
             margin-bottom: 15px;
         }
-        .ingredient-info h2 {
+        .info-ingrediente h2 {
             margin-bottom: 10px;
             font-size: 1.5rem;
         }
-        .ingredient-info p {
+        .info-ingrediente p {
             margin: 5px 0;
         }
     </style>
 </head>
 <body>
 
-    <h1>Find Your Ingredient</h1>
-    <input type="text" id="ingredient" placeholder="Enter ingredient (e.g., Vodka)">
-    <button id="fetchIngredient">Fetch Ingredient</button>
+    <h1>Detalles del Ingrediente</h1>
 
-    <div class="ingredient-info" id="ingredient-info">
-        <img id="ingredient-image" alt="Ingredient Image">
+    <!-- Contenedor para mostrar la información del ingrediente -->
+    <div class="info-ingrediente" id="info-ingrediente">
+        <img id="ingredient-img" alt="Imagen del Ingrediente">
         <h2 id="ingredient-name"></h2>
-        <p><strong>Type:</strong> <span id="ingredient-type"></span></p>
-        <p><strong>Alcohol:</strong> <span id="ingredient-alcohol"></span></p>
+        <p><strong>ID:</strong> <span id="ingredient-id"></span></p>
+        <p><strong>Descripción:</strong> <span id="ingredient-description"></span></p>
+        <p><strong>Tipo:</strong> <span id="ingredient-type"></span></p>
+        <p><strong>Alcohólico:</strong> <span id="ingredient-alcoholic"></span></p>
         <p><strong>ABV:</strong> <span id="ingredient-abv"></span></p>
-        <p id="ingredient-description"></p>
     </div>
 
-    <script src="script.js"></script>
-
+    <script src="../js/script.js"></script>
+    
 </body>
 </html>
